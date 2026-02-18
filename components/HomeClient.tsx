@@ -90,6 +90,27 @@ export function HomeClient() {
     run();
   }, []);
 
+  useEffect(() => {
+    const tabName = TABS[currentTabIndex]?.label ?? "Home";
+    const titles: Record<string, string> = {
+      Home: "MFLIX - Watch Free HD Movies, Series & Anime Online",
+      Movies: "MFLIX - Browse New Bollywood & Hollywood Movies",
+      Series: "MFLIX - Watch Popular Web Series Online Free",
+      Anime: "MFLIX - Watch Anime Online English Sub/Dub",
+      "18+": "MFLIX - 18+ Content Warning"
+    };
+
+    document.title = titles[tabName] || "MFLIX - Movies & Series";
+
+    const metaDesc = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        "content",
+        `Watch the best ${tabName} collection on MFLIX. High Quality streaming, fast loading.`
+      );
+    }
+  }, [currentTabIndex]);
+
   const tabResults = useMemo(() => {
     return TABS.reduce<Record<TabId, MovieItem[]>>((acc, tab) => {
       if (searchTerm) {
