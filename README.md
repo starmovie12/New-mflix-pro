@@ -1,16 +1,43 @@
-# React + Vite
+# MFLIX - Modern Streaming Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Netflix-inspired movie streaming platform built with React, Vite, and Tailwind CSS. Features a professional UI/UX with 60+ features including watchlist management, search with history, infinite scroll, video player with custom controls, and much more.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** — Component-based UI with hooks
+- **Vite** — Lightning fast build tool
+- **Tailwind CSS v4** — Utility-first styling
+- **Zustand** — Lightweight state management with persistence
+- **Firebase** — Realtime Database for content
+- **Framer Motion** — Smooth animations
+- **React Router v7** — Client-side routing
+- **React Helmet** — Dynamic SEO meta tags
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Build for Production
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run build
+npm run preview
+```
+
+## Features
+
+See the full feature list in the codebase. Key highlights:
+
+- Hero banner carousel
+- Movie grid with responsive layout
+- Advanced search with debounce and history
+- Category tabs (Home, Movies, Series, Anime, 18+)
+- Video player with custom controls
+- Watchlist, History, Continue Watching
+- Genre/Year/Language filters with sort
+- Infinite scroll pagination
+- PWA support
+- And many more...
