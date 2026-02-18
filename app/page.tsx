@@ -29,7 +29,11 @@ export default function HomePage() {
 
   return (
     <div className="bg-mflix-bg text-white">
-      <TopBar search={searchDraft} onSearchChange={setSearchDraft} onGo={() => setSearchTerm(searchDraft)} />
+      <TopBar
+        search={searchDraft}
+        onSearchChange={setSearchDraft}
+        onGo={() => setSearchTerm(searchDraft.trim().toLowerCase())}
+      />
       <TabBar activeIndex={activeIndex} onSelect={setActiveIndex} />
 
       {topMessage ? (
