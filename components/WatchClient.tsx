@@ -169,7 +169,7 @@ export function WatchClient({ id }: WatchClientProps) {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#050505] text-white">
+    <div className="min-h-[100dvh] bg-mflix-bg text-white">
       <div className="relative mx-auto w-full max-w-[1100px]">
         <div className="relative w-full overflow-hidden bg-black [aspect-ratio:16/9]">
           <video
@@ -234,27 +234,27 @@ export function WatchClient({ id }: WatchClientProps) {
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-2xl font-extrabold">{movie.title}</h1>
-              <span className="rounded bg-[#e50914] px-2 py-1 text-[11px] font-bold">
+              <span className="rounded-sm bg-mflix-red px-2 py-0.5 text-[11px] font-bold tracking-wide">
                 {movie.qualityName}
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="rounded bg-white/10 px-3 py-1.5">{movie.cert}</span>
-              <span className="rounded bg-white/10 px-3 py-1.5">
-                <Star className="mr-1 inline-block text-[#ffc107]" size={12} />
-                {movie.rating}
+              <span className="rounded-sm bg-white/8 px-3 py-1.5 text-white/80">{movie.cert}</span>
+              <span className="flex items-center gap-1 rounded-sm bg-white/8 px-3 py-1.5">
+                <Star className="text-yellow-400" size={12} />
+                <span className="text-white/90">{movie.rating}</span>
               </span>
-              <span className="rounded bg-white/10 px-3 py-1.5">{movie.year}</span>
-              <span className="rounded bg-white/10 px-3 py-1.5">{movie.genre}</span>
-              <span className="rounded bg-white/10 px-3 py-1.5">{movie.runtime}</span>
+              <span className="rounded-sm bg-white/8 px-3 py-1.5 text-white/80">{movie.year}</span>
+              <span className="rounded-sm bg-white/8 px-3 py-1.5 text-white/80">{movie.genre}</span>
+              <span className="rounded-sm bg-white/8 px-3 py-1.5 text-white/80">{movie.runtime}</span>
             </div>
 
             {movie.isSeries ? (
               <button
                 type="button"
                 onClick={() => setEpisodeListOpen(true)}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-[#2962ff] text-sm font-bold text-white"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-mflix-red text-sm font-bold text-white transition-colors hover:bg-mflix-red-dark active:scale-[0.98]"
               >
                 <Layers size={16} />
                 Episodes
@@ -271,25 +271,31 @@ export function WatchClient({ id }: WatchClientProps) {
               />
             )}
 
-            <p className="text-sm leading-6 text-[#ccc]">{movie.description}</p>
+            <p className="text-sm leading-relaxed text-mflix-text-dim">{movie.description}</p>
 
-            <div>
-              <h2 className="mb-3 text-lg font-semibold">More Like This</h2>
-              <div className="grid grid-cols-3 gap-2.5">
-                {related.map((item) => (
-                  <Link key={item.id} href={`/watch/${item.id}`} className="block">
-                    <Image
-                      src={item.poster}
-                      alt={item.title}
-                      width={240}
-                      height={360}
-                      className="w-full rounded-md object-cover [aspect-ratio:2/3]"
-                    />
-                    <p className="mt-1 text-xs text-[#ddd]">{item.title}</p>
-                  </Link>
-                ))}
+            {related.length > 0 && (
+              <div>
+                <h2 className="mb-3 text-lg font-bold">More Like This</h2>
+                <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+                  {related.map((item) => (
+                    <Link key={item.id} href={`/watch/${item.id}`} className="group block">
+                      <div className="relative overflow-hidden rounded-lg">
+                        <Image
+                          src={item.poster}
+                          alt={item.title}
+                          width={240}
+                          height={360}
+                          className="w-full object-cover transition-transform duration-300 group-hover:scale-105 [aspect-ratio:2/3]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                      </div>
+                      <p className="mt-1.5 truncate text-[11px] font-semibold text-white/90">{item.title}</p>
+                      <p className="text-[10px] text-mflix-text-muted">{item.year}</p>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ) : null}
       </div>

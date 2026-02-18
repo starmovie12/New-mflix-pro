@@ -26,7 +26,7 @@ export function SourceSelector({
       <select
         value={selectedServer}
         onChange={(event) => onServerChange(event.target.value)}
-        className="h-11 rounded-md border border-white/10 bg-[#1a1a1a] px-3 text-sm text-white outline-none"
+        className="h-11 rounded-md border border-white/10 bg-mflix-card px-3 text-sm text-white outline-none transition-colors focus:border-mflix-red/50"
       >
         {servers.map((server) => (
           <option key={server} value={server}>
@@ -38,7 +38,7 @@ export function SourceSelector({
       <select
         value={selectedQuality}
         onChange={(event) => onQualityChange(event.target.value)}
-        className="h-11 rounded-md border border-white/10 bg-[#1a1a1a] px-3 text-sm text-white outline-none"
+        className="h-11 rounded-md border border-white/10 bg-mflix-card px-3 text-sm text-white outline-none transition-colors focus:border-mflix-red/50"
       >
         {qualities.map((quality) => (
           <option key={quality} value={quality}>
@@ -50,7 +50,7 @@ export function SourceSelector({
       <button
         type="button"
         onClick={onPlay}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#e50914] px-5 text-sm font-bold text-white"
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-mflix-red px-5 text-sm font-bold text-white transition-colors hover:bg-mflix-red-dark active:scale-[0.98]"
       >
         <Play size={14} />
         Play
