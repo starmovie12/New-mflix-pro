@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #E50914;
+  --bg-black: #050505;
+  --bg-card: #1a1a1a;
+  --text-main: #ffffff;
+  --text-sec: #a3a3a3;
+  --accent-gold: #ffc107;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overscroll-behavior-x: none;
+  background-color: var(--bg-black);
+  color: var(--text-main);
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+/* Tab bar scroll hide */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Swipe container transition */
+.swipe-container {
+  display: flex;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Shimmer animation for skeletons */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(100deg, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.06) 50%);
+  background-size: 220% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Video player custom styles */
+.video-controls-overlay {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+
+.video-bottom-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+}
+
+/* Watch progress bar */
+.watch-progress-bar {
+  background: linear-gradient(90deg, #ff3f5e, #ffc66f);
+}
+
+/* Episode overlay */
+.episodes-overlay-bg {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+/* Menu popup */
+.menu-popup {
+  background: rgba(13, 18, 27, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.menu-popup button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Skip intro pill */
+.skip-pill {
+  background: color-mix(in srgb, var(--accent), #fff 12%);
+}
