@@ -43,7 +43,7 @@ const defaultFilters: Filters = {
 };
 
 export function CatalogApp() {
-  const { lastTabIndex, setLastTabIndex, gridDensity, setGridDensity, watchlist, likes } =
+  const { lastTabIndex, setLastTabIndex, gridDensity, setGridDensity, watchlist, likes, history: viewHistory } =
     useUserStore();
 
   const [loading, setLoading] = useState(true);
@@ -56,9 +56,13 @@ export function CatalogApp() {
   const [searchText, setSearchText] = useState(() => getQueryParam('q') ?? '');
   const [searchTerm, setSearchTerm] = useState(() => toSearchable(getQueryParam('q') ?? ''));
   const [, startTransition] = useTransition();
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [adultGateOpen, setAdultGateOpen] = useState(false);
+  const [pendingTabIndex, setPendingTabIndex] = useState<number | null>(null);
+  const [adultUnlocked, setAdultUnlocked] = useState(() => localStorage.getItem('mflix.adultUnlocked') === 'true');
 
   const [visibleCount, setVisibleCount] = useState(60);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -102,12 +106,36 @@ export function CatalogApp() {
     () =>
       debounce((value: string) => {
         startTransition(() => {
-          setSearchTerm(toSearchable(value.trim()));
+          const q = value.trim();
+          setSearchTerm(toSearchable(q));
           setVisibleCount(60);
+          const url = new URL(window.location.href);
+          if (q) url.searchParams.set('q', q);
+          else url.searchParams.delete('q');
+          window.history.replaceState(null, '', url.toString());
         });
       }, 140),
     [startTransition]
   );
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '/' && !(e.target instanceof HTMLInputElement) && !(e.target instanceof HTMLTextAreaElement)) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+      if (e.key === 'Escape') {
+        setFilterOpen(false);
+        setAdultGateOpen(false);
+        if (searchText.length) {
+          setSearchText('');
+          updateSearch('');
+        }
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [searchText.length, updateSearch]);
 
   const all = useMemo(() => raw.map(normalizeMovie).filter((m) => m.id), [raw]);
 
@@ -203,6 +231,20 @@ export function CatalogApp() {
   };
 
   const isOffline = typeof navigator !== 'undefined' ? navigator.onLine === false : false;
+  const recent = viewHistory.slice(0, 12);
+
+  const requestTabSwitch = (idx: number) => {
+    if (idx === tabIndex) return;
+    const target = tabs[idx];
+    if (!target) return;
+    if (target.id === 'adult' && !adultUnlocked) {
+      setPendingTabIndex(idx);
+      setAdultGateOpen(true);
+      return;
+    }
+    setTabIndex(idx);
+    setVisibleCount(60);
+  };
 
   return (
     <div className="app-shell">
@@ -224,6 +266,7 @@ export function CatalogApp() {
             <div className="searchbox" style={{ flex: 1 }}>
               <i className="fas fa-magnifying-glass" style={{ color: 'rgba(255,255,255,0.65)' }} />
               <input
+                ref={searchRef}
                 value={searchText}
                 onChange={(e) => {
                   const v = e.target.value;
@@ -270,8 +313,7 @@ export function CatalogApp() {
               key={t.id}
               className={`tab ${idx === tabIndex ? 'active' : ''}`}
               onClick={() => {
-                setTabIndex(idx);
-                setVisibleCount(60);
+                requestTabSwitch(idx);
               }}
             >
               {t.label}
@@ -316,6 +358,38 @@ export function CatalogApp() {
             <i className="fas fa-rotate-left" /> Reset
           </button>
         </div>
+
+        {tab.id === 'home' && !searchTerm.length && recent.length ? (
+          <>
+            <div className="row-title">Recently Viewed</div>
+            <div className="row-scroll" aria-label="Recently viewed">
+              {recent.map((h) => (
+                <article
+                  key={h.id}
+                  className="card mini-card"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Open ${h.title}`}
+                  onClick={() => {
+                    window.location.href = `video-player.html?id=${encodeURIComponent(h.id)}&type=${
+                      h.isSeries ? 'tv' : 'movie'
+                    }&source=firebase`;
+                  }}
+                >
+                  <div className="poster">
+                    <img src={h.poster ?? undefined} alt={h.title} loading="lazy" />
+                  </div>
+                  <div className="card-meta">
+                    <div className="card-title-row">
+                      <h3 className="card-title">{h.title}</h3>
+                      <div className="card-year">{h.year}</div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </>
+        ) : null}
 
         {loading ? (
           <SkeletonGrid count={18} />
@@ -427,6 +501,44 @@ export function CatalogApp() {
           </button>
           <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => setFilterOpen(false)}>
             Apply
+          </button>
+        </div>
+      </Sheet>
+
+      <Sheet
+        open={adultGateOpen}
+        title="18+ Content"
+        onClose={() => {
+          setAdultGateOpen(false);
+          setPendingTabIndex(null);
+        }}
+      >
+        <div className="notice">
+          <strong>Warning:</strong> This section may contain adult content. Confirm you are 18+.
+        </div>
+        <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
+          <button
+            className="btn btn-ghost"
+            style={{ flex: 1 }}
+            onClick={() => {
+              setAdultGateOpen(false);
+              setPendingTabIndex(null);
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className="btn btn-primary"
+            style={{ flex: 1 }}
+            onClick={() => {
+              localStorage.setItem('mflix.adultUnlocked', 'true');
+              setAdultUnlocked(true);
+              setAdultGateOpen(false);
+              if (pendingTabIndex !== null) requestTabSwitch(pendingTabIndex);
+              setPendingTabIndex(null);
+            }}
+          >
+            I am 18+
           </button>
         </div>
       </Sheet>

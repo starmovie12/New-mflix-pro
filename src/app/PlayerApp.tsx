@@ -22,6 +22,7 @@ export function PlayerApp() {
   const [playMenuOpen, setPlayMenuOpen] = useState(false);
   const [dlMenuOpen, setDlMenuOpen] = useState(false);
   const [qMenuOpen, setQMenuOpen] = useState(false);
+  const [speedMenuOpen, setSpeedMenuOpen] = useState(false);
   const [epOpen, setEpOpen] = useState(false);
 
   const { pushHistory, setContinue, continueWatching, watchlist, likes, toggleWatchlist, toggleLike } =
@@ -123,6 +124,7 @@ export function PlayerApp() {
       setPlayMenuOpen(false);
       setDlMenuOpen(false);
       setQMenuOpen(false);
+      setSpeedMenuOpen(false);
     };
     document.addEventListener('click', onClick);
     return () => document.removeEventListener('click', onClick);
@@ -261,6 +263,26 @@ export function PlayerApp() {
                 </div>
               </div>
             ) : null}
+
+            <div className="dropdown" onClick={(e) => e.stopPropagation()}>
+              <button className="icon-btn" aria-label="Speed" onClick={() => setSpeedMenuOpen((s) => !s)}>
+                <i className="fas fa-gauge" />
+              </button>
+              <div className={`menu ${speedMenuOpen ? 'open' : ''}`}>
+                {[0.75, 1, 1.25, 1.5, 2].map((r) => (
+                  <button
+                    key={r}
+                    onClick={() => {
+                      if (videoRef.current) videoRef.current.playbackRate = r;
+                      setSpeedMenuOpen(false);
+                      setToast(`Speed ${r}x`);
+                    }}
+                  >
+                    {r}x
+                  </button>
+                ))}
+              </div>
+            </div>
 
             <button className="icon-btn" aria-label="Fit" onClick={() => setFit((f) => (f === 'contain' ? 'cover' : 'contain'))}>
               <i className="fas fa-expand" />
