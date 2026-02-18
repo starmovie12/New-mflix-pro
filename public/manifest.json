@@ -1,0 +1,10 @@
+{
+  "name": "MFLIX - Watch Movies Online",
+  "short_name": "MFLIX",
+  "description": "Stream HD Movies, Series & Anime for free",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#E50914",
+  "orientation": "portrait-primary"
+}
