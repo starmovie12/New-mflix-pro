@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --mflix-bg: #050505;
+  --mflix-red: #e50914;
+}
+
+html,
+body {
+  height: 100%;
+  overscroll-behavior-x: none;
+}
+
+body {
+  margin: 0;
+  background: var(--mflix-bg);
+  color: #ffffff;
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
