@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Layers, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -277,9 +278,11 @@ export function WatchClient({ id }: WatchClientProps) {
               <div className="grid grid-cols-3 gap-2.5">
                 {related.map((item) => (
                   <Link key={item.id} href={`/watch/${item.id}`} className="block">
-                    <img
+                    <Image
                       src={item.poster}
                       alt={item.title}
+                      width={240}
+                      height={360}
                       className="w-full rounded-md object-cover [aspect-ratio:2/3]"
                     />
                     <p className="mt-1 text-xs text-[#ddd]">{item.title}</p>

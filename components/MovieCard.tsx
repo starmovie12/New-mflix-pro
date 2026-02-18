@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import type { MovieItem } from "@/types/movie";
 
@@ -20,10 +21,11 @@ export function MovieCard({ item }: MovieCardProps) {
           <div className="absolute right-0 top-0 z-[2] rounded-bl-lg bg-[rgba(211,47,47,0.95)] px-1.5 py-[2px] text-[9px] font-bold uppercase text-white">
             {languageBadge}
           </div>
-          <img
+          <Image
             src={item.poster}
             alt={`Watch ${item.title} (${item.year}) Full Movie Online Free`}
-            loading="lazy"
+            fill
+            sizes="(max-width: 768px) 33vw, (max-width: 1200px) 20vw, 14vw"
             className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
