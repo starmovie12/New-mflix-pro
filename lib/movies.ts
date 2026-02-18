@@ -1,6 +1,6 @@
 import { get, limitToLast, query, ref } from "firebase/database";
 
-import { database } from "@/lib/firebase";
+import { getFirebaseDatabase } from "@/lib/firebase";
 import type { Episode, MediaLink, MovieItem, Season } from "@/types/movie";
 
 const FALLBACK_POSTER = "https://via.placeholder.com/200x300?text=No+Image";
@@ -294,6 +294,7 @@ export function normalizeMovie(
 }
 
 export async function fetchMovies(): Promise<MovieItem[]> {
+  const database = getFirebaseDatabase();
   const snapshot = await get(ref(database, "movies_by_id"));
   if (!snapshot.exists()) return [];
 
@@ -304,6 +305,7 @@ export async function fetchMovies(): Promise<MovieItem[]> {
 export async function fetchMovieById(id: string): Promise<MovieItem | null> {
   if (!id) return null;
 
+  const database = getFirebaseDatabase();
   const directSnapshot = await get(ref(database, `movies_by_id/${id}`));
   if (directSnapshot.exists()) {
     const value = directSnapshot.val();
@@ -321,6 +323,7 @@ export async function fetchRelatedMovies(
   excludeId: string,
   genreHint: string
 ): Promise<MovieItem[]> {
+  const database = getFirebaseDatabase();
   const snapshot = await get(query(ref(database, "movies_by_id"), limitToLast(80)));
   if (!snapshot.exists()) return [];
 
