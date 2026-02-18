@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  --color-mflix-red: #e50914;
+  --color-mflix-red-dark: #b20710;
+  --color-mflix-bg: #0a0a0a;
+  --color-mflix-card: #181818;
+  --color-mflix-card-hover: #252525;
+  --color-mflix-surface: #141414;
+  --color-mflix-border: rgba(255, 255, 255, 0.08);
+  --color-mflix-text-muted: #8c8c8c;
+  --color-mflix-text-dim: #ffffffb3;
+}
+
 :root {
   color-scheme: dark;
 }
@@ -17,7 +29,7 @@ body {
   height: 100%;
   overscroll-behavior-x: none;
   overflow-x: hidden;
-  background: #050505;
+  background: var(--color-mflix-bg);
 }
 
 body {
@@ -33,4 +45,76 @@ button,
 input,
 select {
   font: inherit;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #181818 25%, #252525 50%, #181818 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 20s ease-in-out alternate infinite;
+}
+
+.row-scroll {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.row-scroll > * {
+  scroll-snap-align: start;
 }

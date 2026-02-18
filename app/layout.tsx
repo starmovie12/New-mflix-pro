@@ -6,7 +6,7 @@ import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "600", "700"]
+  weight: ["400", "500", "600", "700", "800"]
 });
 
 export const metadata: Metadata = {
@@ -20,7 +20,10 @@ export const metadata: Metadata = {
     "web series",
     "anime",
     "mflix",
-    "streaming"
+    "streaming",
+    "bollywood",
+    "hollywood",
+    "2026 movies"
   ],
   robots: {
     index: true,
@@ -38,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} bg-[#050505] text-white`}>
+      <body className={`${poppins.className} bg-mflix-bg text-white antialiased`}>
         {children}
 
         <Script id="monetag-tag-min" strategy="lazyOnload">

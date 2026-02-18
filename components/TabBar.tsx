@@ -13,8 +13,8 @@ type TabBarProps = {
 
 export function TabBar({ tabs, currentIndex, onSwitch }: TabBarProps) {
   return (
-    <nav className="border-b border-white/10 bg-[rgba(5,5,5,0.98)]">
-      <div className="flex overflow-x-auto whitespace-nowrap px-[5px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <nav className="border-b border-mflix-border bg-mflix-bg/95 backdrop-blur-xl">
+      <div className="scrollbar-hide flex overflow-x-auto px-1">
         {tabs.map((tab, index) => {
           const active = index === currentIndex;
           return (
@@ -22,14 +22,16 @@ export function TabBar({ tabs, currentIndex, onSwitch }: TabBarProps) {
               key={tab.id}
               type="button"
               onClick={() => onSwitch(index)}
-              className={`relative h-[45px] shrink-0 px-5 text-sm transition-colors ${
-                active ? "font-bold text-white" : "font-medium text-[#888]"
+              className={`relative h-11 shrink-0 px-5 text-[13px] transition-all duration-200 ${
+                active
+                  ? "font-bold text-white"
+                  : "font-medium text-mflix-text-muted hover:text-white/70"
               }`}
             >
               {tab.label}
-              {active ? (
-                <span className="absolute bottom-0 left-1/2 h-[3px] w-1/2 -translate-x-1/2 rounded-t-sm bg-[#d32f2f]" />
-              ) : null}
+              {active && (
+                <span className="absolute bottom-0 left-1/2 h-[2.5px] w-3/5 -translate-x-1/2 rounded-t bg-mflix-red" />
+              )}
             </button>
           );
         })}
