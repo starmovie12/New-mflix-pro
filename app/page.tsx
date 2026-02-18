@@ -1,17 +1,50 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { TopBar } from "@/components/TopBar";
+import { TabBar } from "@/components/TabBar";
+import { CatalogSwipe } from "@/components/CatalogSwipe";
+import { useMoviesById } from "@/lib/hooks/useMoviesById";
+
 export default function HomePage() {
+  const { loading, error, movies } = useMoviesById();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [searchDraft, setSearchDraft] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setSearchTerm(searchDraft.trim().toLowerCase()), 50);
+    return () => window.clearTimeout(t);
+  }, [searchDraft]);
+
+  useEffect(() => {
+    if (activeIndex !== 0 && searchTerm.length > 0) setActiveIndex(0);
+  }, [activeIndex, searchTerm]);
+
+  const topMessage = useMemo(() => {
+    if (error) return error;
+    if (loading) return "Loading… (Add Firebase keys to .env.local to load real data)";
+    return "";
+  }, [loading, error]);
+
   return (
-    <main className="min-h-dvh bg-mflix-bg text-white">
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        <h1 className="text-3xl font-extrabold tracking-tight">
-          <span className="text-white">M</span>
-          <span className="text-mflix-red">FLIX</span>
-        </h1>
-        <p className="mt-3 text-sm text-white/70">
-          Next.js 14 App Router scaffold is ready. Next step: port the tabbed/swipe catalog UI and the /watch/[id]
-          player.
-        </p>
-      </div>
-    </main>
+    <div className="bg-mflix-bg text-white">
+      <TopBar search={searchDraft} onSearchChange={setSearchDraft} onGo={() => setSearchTerm(searchDraft)} />
+      <TabBar activeIndex={activeIndex} onSelect={setActiveIndex} />
+
+      {topMessage ? (
+        <div className="pt-[110px]">
+          <div className="mx-auto max-w-xl px-4 py-6 text-center text-sm text-white/70">{topMessage}</div>
+        </div>
+      ) : null}
+
+      <CatalogSwipe
+        activeIndex={activeIndex}
+        onIndexChange={setActiveIndex}
+        allMovies={movies}
+        searchTerm={searchTerm}
+      />
+    </div>
   );
 }
 
