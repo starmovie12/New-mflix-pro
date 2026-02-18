@@ -93,6 +93,19 @@ export function WatchClient({ id }: WatchClientProps) {
   }, [id]);
 
   useEffect(() => {
+    if (movie) {
+      document.title = `Watch ${movie.title} (${movie.year}) - MFLIX`;
+      const descriptionTag = document.querySelector('meta[name="description"]');
+      if (descriptionTag) {
+        descriptionTag.setAttribute(
+          "content",
+          `Watch ${movie.title} (${movie.year}) in ${movie.qualityName} quality. ${movie.genre}. Stream free on MFLIX.`
+        );
+      }
+    }
+  }, [movie]);
+
+  useEffect(() => {
     if (!videoRef.current || !videoUrl) return;
     videoRef.current.load();
     videoRef.current.play().catch(() => undefined);

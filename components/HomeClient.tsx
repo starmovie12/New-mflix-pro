@@ -10,6 +10,34 @@ import { TabBar } from "@/components/TabBar";
 
 const MAX_ITEMS_PER_TAB = 100;
 
+const TAB_META: Record<string, { title: string; description: string }> = {
+  Home: {
+    title: "MFLIX - Watch Free HD Movies, Series & Anime Online",
+    description:
+      "Stream the latest HD Movies, Web Series, and Anime for free on MFLIX. Daily updates, fast streaming, and no registration required."
+  },
+  Movies: {
+    title: "MFLIX - Browse New Bollywood & Hollywood Movies",
+    description:
+      "Watch the best Movies collection on MFLIX. High Quality streaming, fast loading."
+  },
+  Series: {
+    title: "MFLIX - Watch Popular Web Series Online Free",
+    description:
+      "Watch the best Series collection on MFLIX. High Quality streaming, fast loading."
+  },
+  Anime: {
+    title: "MFLIX - Watch Anime Online English Sub/Dub",
+    description:
+      "Watch the best Anime collection on MFLIX. High Quality streaming, fast loading."
+  },
+  "18+": {
+    title: "MFLIX - 18+ Content Warning",
+    description:
+      "Watch the best 18+ collection on MFLIX. High Quality streaming, fast loading."
+  }
+};
+
 function byTab(items: MovieItem[], tabId: TabId): MovieItem[] {
   if (tabId === "home") return items;
   if (tabId === "movies") {
@@ -89,6 +117,18 @@ export function HomeClient() {
     };
     run();
   }, []);
+
+  useEffect(() => {
+    const tab = TABS[currentTabIndex];
+    const meta = TAB_META[tab?.label];
+    if (!meta) return;
+
+    document.title = meta.title;
+    const descriptionTag = document.querySelector('meta[name="description"]');
+    if (descriptionTag) {
+      descriptionTag.setAttribute("content", meta.description);
+    }
+  }, [currentTabIndex]);
 
   const tabResults = useMemo(() => {
     return TABS.reduce<Record<TabId, MovieItem[]>>((acc, tab) => {
