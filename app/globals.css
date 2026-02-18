@@ -2,6 +2,11 @@
 
 :root {
   color-scheme: dark;
+  --mflix-red: #e50914;
+  --mflix-red-dark: #b20710;
+  --mflix-bg: #050505;
+  --mflix-card: #141414;
+  --mflix-border: rgba(255, 255, 255, 0.08);
 }
 
 *,
@@ -11,17 +16,22 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   margin: 0;
   height: 100%;
   overscroll-behavior-x: none;
   overflow-x: hidden;
-  background: #050505;
+  background: var(--mflix-bg);
 }
 
 body {
   min-height: 100dvh;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 a {
@@ -33,4 +43,40 @@ button,
 input,
 select {
   font: inherit;
+}
+
+/* Custom scrollbar - subtle */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Selection */
+::selection {
+  background: rgba(229, 9, 20, 0.4);
+  color: white;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--mflix-red);
+  outline-offset: 2px;
+}
+
+/* Smooth image loading */
+img {
+  content-visibility: auto;
 }

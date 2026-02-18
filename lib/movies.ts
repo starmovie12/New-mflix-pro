@@ -350,3 +350,39 @@ export const TABS: Array<{ id: TabId; label: string }> = [
 ];
 
 export type TabId = "home" | "movies" | "tvshow" | "anime" | "adult";
+
+/** Top 10 movies by rating (non-adult, movies only) */
+export function getTop10Movies(items: MovieItem[]): MovieItem[] {
+  const currentYear = new Date().getFullYear();
+  return items
+    .filter(
+      (m) =>
+        !m.adult &&
+        m.category.toLowerCase().includes("movie") &&
+        m.rating !== "N/A"
+    )
+    .sort((a, b) => {
+      const ar = parseFloat(String(a.rating)) || 0;
+      const br = parseFloat(String(b.rating)) || 0;
+      return br - ar;
+    })
+    .slice(0, 10);
+}
+
+/** Upcoming / latest movies (recent year, non-adult) */
+export function getUpcomingMovies(items: MovieItem[]): MovieItem[] {
+  const currentYear = new Date().getFullYear();
+  return items
+    .filter(
+      (m) =>
+        !m.adult &&
+        (m.category.toLowerCase().includes("movie") ||
+          m.category.toLowerCase().includes("series"))
+    )
+    .sort((a, b) => {
+      const ay = parseInt(String(a.year), 10) || 0;
+      const by = parseInt(String(b.year), 10) || 0;
+      return by - ay;
+    })
+    .slice(0, 20);
+}
