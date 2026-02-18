@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --mflix-bg: #050505;
+  --mflix-accent: #E50914;
+  --mflix-accent-alt: #D32F2F;
+  --mflix-card: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overscroll-behavior-x: none;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  background-color: var(--mflix-bg);
+  color: white;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top: 3px solid var(--mflix-accent);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.8s linear infinite;
+}
