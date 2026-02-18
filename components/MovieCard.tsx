@@ -17,8 +17,8 @@ export function MovieCard({ item }: MovieCardProps) {
         aria-label={`Watch ${item.title}`}
         className="group block"
       >
-        <div className="relative h-0 w-full overflow-hidden rounded-md bg-[#1a1a1a] pb-[150%] shadow-[0_2px_5px_rgba(0,0,0,0.3)]">
-          <div className="absolute right-0 top-0 z-[2] rounded-bl-lg bg-[rgba(211,47,47,0.95)] px-1.5 py-[2px] text-[9px] font-bold uppercase text-white">
+        <div className="relative h-0 w-full overflow-hidden rounded-lg bg-[#141414] pb-[150%] shadow-[0_12px_35px_rgba(0,0,0,0.55)] ring-1 ring-white/5 transition-transform duration-300 group-hover:-translate-y-0.5">
+          <div className="absolute right-0 top-0 z-[2] rounded-bl-xl bg-[rgba(211,47,47,0.95)] px-2 py-[3px] text-[9px] font-extrabold uppercase text-white shadow-[0_10px_25px_rgba(0,0,0,0.35)]">
             {languageBadge}
           </div>
           <Image
@@ -26,8 +26,9 @@ export function MovieCard({ item }: MovieCardProps) {
             alt={`Watch ${item.title} (${item.year}) Full Movie Online Free`}
             fill
             sizes="(max-width: 768px) 33vw, (max-width: 1200px) 20vw, 14vw"
-            className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="absolute left-0 top-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
           />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-90" />
         </div>
 
         <div className="mt-1.5 flex items-center justify-between gap-1 px-[1px]">
@@ -40,10 +41,10 @@ export function MovieCard({ item }: MovieCardProps) {
         </div>
 
         <div className="mt-[3px] flex items-center justify-between px-[1px]">
-          <span className="rounded-[3px] border border-[rgba(255,255,255,0.4)] bg-black px-1 py-[1px] text-[9px] font-bold text-white">
+          <span className="rounded-md border border-white/20 bg-black/70 px-1.5 py-[1px] text-[9px] font-extrabold text-white backdrop-blur">
             {item.qualityName}
           </span>
-          <span className="rounded-[3px] border border-[#d32f2f] bg-[#d32f2f] px-1 py-[1px] text-[9px] font-bold text-white">
+          <span className="rounded-md border border-[#d32f2f] bg-[#d32f2f] px-1.5 py-[1px] text-[9px] font-extrabold text-white shadow-[0_10px_25px_rgba(211,47,47,0.18)]">
             {item.rating} ★
           </span>
         </div>
