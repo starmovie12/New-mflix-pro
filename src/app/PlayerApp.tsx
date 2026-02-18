@@ -60,7 +60,7 @@ export function PlayerApp() {
   const inWatchlist = Boolean(watchlist[id]);
   const liked = Boolean(likes[id]);
 
-  const links = player?.links ?? [];
+  const links = useMemo(() => player?.links ?? [], [player]);
 
   const playVideo = (url: string | null | undefined) => {
     if (!url) return;
@@ -538,7 +538,7 @@ function useRelated(seed: NormalizedMovie | null) {
     return () => {
       alive = false;
     };
-  }, [seed?.categoryText, seed?.id, seed?.isSeries]);
+  }, [seed]);
 
   return list;
 }

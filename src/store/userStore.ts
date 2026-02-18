@@ -34,7 +34,7 @@ type UserState = {
 
 export const useUserStore = create<UserState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       watchlist: {},
       likes: {},
       history: [],
