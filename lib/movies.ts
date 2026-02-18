@@ -78,10 +78,11 @@ function parseLinks(input: unknown): MediaLink[] {
     try {
       source = JSON.parse(source);
     } catch {
-      if (/^https?:\/\//i.test(source.trim())) {
+      const fallbackUrl = source.trim();
+      if (/^https?:\/\//i.test(fallbackUrl)) {
         return [
           {
-            url: source.trim(),
+            url: fallbackUrl,
             label: "HD",
             server: "Server 1"
           }
