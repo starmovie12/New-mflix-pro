@@ -1,0 +1,57 @@
+:root {
+  --bg: #050505;
+  --panel: rgba(20, 20, 20, 0.85);
+  --panel-solid: #111111;
+  --card: #141414;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.68);
+  --muted2: rgba(255, 255, 255, 0.5);
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.45);
+  --red: #e50914;
+  --red2: #b10610;
+  --blue: #2962ff;
+  --gold: #ffc107;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overscroll-behavior-x: none;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: rgba(229, 9, 20, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
