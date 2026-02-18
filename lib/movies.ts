@@ -75,10 +75,11 @@ function parseLinks(input: unknown): MediaLink[] {
   let source: unknown = input;
 
   if (typeof source === "string") {
+    const rawSource = source;
     try {
-      source = JSON.parse(source);
+      source = JSON.parse(rawSource);
     } catch {
-      const fallbackUrl = source.trim();
+      const fallbackUrl = rawSource.trim();
       if (/^https?:\/\//i.test(fallbackUrl)) {
         return [
           {
